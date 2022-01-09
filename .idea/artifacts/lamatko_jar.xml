@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lamatko:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lamatko_jar</output-path>
+    <root id="archive" name="lamatko.jar">
+      <element id="module-output" name="lamatko" />
+    </root>
+  </artifact>
+</component>
