@@ -10,6 +10,7 @@ object Lamatko {
         shuffleDigitOrder: Boolean = false,
         shuffleDigitCoding: Boolean = false,
         resultCount: Int = 100,
+        timeoutMillis: Long = 10000,
     ): List<Result> {
         val digits = digitDescription
             .trim()

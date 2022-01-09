@@ -1,16 +1,25 @@
 package lamatko
 
 import lamatko.DecoderAlgorithm.decode
+import java.util.*
 
 
 object CandidateGenerator {
-    fun Problem.gatherSolutions(profile: BackgroundProfile = BackgroundProfile.default): List<Result> {
+    fun Problem.gatherSolutions(
+        profile: BackgroundProfile = BackgroundProfile.default,
+        timeout: Long = 10000
+    ): List<Result> {
         val dict: MutableMap<String, Result> = mutableMapOf()
+
+        val timeoutAt = System.currentTimeMillis() + timeout
 
         impl.generateCandidates(this) {
             val res = it.decode(profile)
             if (!dict.containsKey(res.result)) {
                 dict.put(res.result, res)
+            }
+            if (System.currentTimeMillis() > timeoutAt) {
+                throw Throwable("Timeout reached!")
             }
         }
 
