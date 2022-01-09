@@ -1,5 +1,5 @@
 # lamatko
-Cipher contest tool that tries to break ciphers based on positional numbering systems - the core library.
+Cipher contest tool that tries to break ciphers based on positional numbering systemsy. This is just the core library, without any frontend. 
 
 # Getting started
 
