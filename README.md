@@ -17,7 +17,7 @@ Principal.solve(
 Lamatko will decode each word as one letter in an arbitrary-positional system, and sort results depending on how much they resemble natural language:
 
 ```
-vrattesenasilniciajdetetedolevaposilnicido - -4.60338 - 012(10) 0123456789(1) - Standard
+vrattesenasilnici - -4.60338 - 012(10) 0123456789(1) - Standard
 ```
 
 Lamatko is useful because it knows multiple output alphabets (like q-less or w-less) and can try all combinations of digit order or even digit coding. 
