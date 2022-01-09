@@ -4,11 +4,14 @@ enum class Order(
     val littleEndian: Boolean = false,
     val bigEndian: Boolean = false,
     val others: Boolean = false,
+    val inheritWhenAplicable: Boolean = false,
 ) {
     LittleEndian(littleEndian = true),
     BigEndian(bigEndian = true),
     EitherEndian(bigEndian = true, littleEndian = true),
-    Unknown(bigEndian = true, littleEndian = true, others = true);
+    EitherEndianInherited(bigEndian = true, littleEndian = true, inheritWhenAplicable = true),
+    UnknownInherited(others = true, inheritWhenAplicable = true),
+    Unknown(others = true);
 }
 
 /**
@@ -22,15 +25,17 @@ data class Digit (
 /**
  * Target alphabets.
  */
-enum class Alphabet(val chars: List<String>) {
+enum class Alphabet(val chars: List<String>, val isObscure: Boolean = false) {
     Standard(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
     BigPolishCross( arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
-    SmallPolishCross( arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
     QLess(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
     WLess(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
-    BrailleCz( arrayListOf( "a", "?", "b", "?", "k", "i", "l", "?", "c", "j", "f", "i", "m", "s", "p", "?", "e", "?", "h", "?", "o", "?", "r", "?", "d", "0", "g", "e", "n", "t", "q", "?", "a", "?", "?", "?", "u", "?", "?", "v", "c", "o", "n", "?", "x", "?", "?", "?", "s", "?", "t", "z", "?", "w", "?", "d", "r", "ch", "#", "y",)),
-    Semaphore1( SemaphoreGenerator.getSemaphore(1, 8)),
-    Semaphore2( SemaphoreGenerator.getSemaphore(0, 9)),
+    SmallPolishCross( isObscure = true, chars = arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
+    BrailleCz( isObscure = true, chars = arrayListOf( "a", "?", "b", "?", "k", "i", "l", "?", "c", "j", "f", "i", "m", "s", "p", "?", "e", "?", "h", "?", "o", "?", "r", "?", "d", "0", "g", "e", "n", "t", "q", "?", "a", "?", "?", "?", "u", "?", "?", "v", "c", "o", "n", "?", "x", "?", "?", "?", "s", "?", "t", "z", "?", "w", "?", "d", "r", "ch", "#", "y",)),
+    Braille2Cz( isObscure = true, chars = BrailleGenerator.getBraille2() ),
+    Braille3Cz( isObscure = true, chars = BrailleGenerator.getBraille3() ),
+    Semaphore1( isObscure = true, chars = SemaphoreGenerator.getSemaphore(1, 8)),
+    Semaphore2( isObscure = true, chars = SemaphoreGenerator.getSemaphore(0, 9)),
 }
 
 /**

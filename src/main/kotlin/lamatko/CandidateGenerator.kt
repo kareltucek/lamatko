@@ -106,8 +106,15 @@ object CandidateGenerator {
             } else {
                 val head = this.first()
                 val tail = this.drop(1)
-                head.values.forEachPermutation(head.valueOrder) { permutation ->
-                    tail.forEachCoding(prefix + listOf(permutation), f)
+                val shouldInherit = head.valueOrder.inheritWhenAplicable
+                        && prefix.isNotEmpty()
+                        && prefix.last().sorted() == head.values.sorted()
+                if (shouldInherit) {
+                    tail.forEachCoding(prefix + listOf(prefix.last()), f)
+                } else {
+                    head.values.forEachPermutation(head.valueOrder) { permutation ->
+                        tail.forEachCoding(prefix + listOf(permutation), f)
+                    }
                 }
             }
         }

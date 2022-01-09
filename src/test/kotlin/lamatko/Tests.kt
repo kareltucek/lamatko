@@ -113,6 +113,7 @@ class Tests {
             resultCount = 50,
             shuffleDigitOrder = true,
             shuffleDigitCoding = true,
+            inheritDigitCoding = true,
         )
 
         val res = all.find { it.result == "testtetokrasnesifry" }
@@ -134,5 +135,51 @@ class Tests {
         Assertions.assertEquals("vrattesenasilniciajdetetedolevaposilnicido", res.result)
 
         println(res.describe())
+    }
+
+
+    @Test
+    fun runPrincipalOnBraille() {
+        /** Row encoded braille - littleEndian */
+        val all = Lamatko.solve(
+            background = background,
+            codedText = "231 120 211 231",
+            digitDescription = "0123 0123 0123",
+            resultCount = 100000,
+            shuffleDigitOrder = false,
+            shuffleDigitCoding = false,
+            obscureAlphabets = true,
+        )
+
+        Assertions.assertNotNull(all.find { it.result == "test" })
+    }
+
+    @Test
+    fun runPrincipalOnBraille2() {
+        /** Row encoded braille - bigEndian */
+        val all = Lamatko.solve(
+            background = background,
+            codedText = "132 210 122 132",
+            digitDescription = "0123 0123 0123",
+            resultCount = 100000,
+            shuffleDigitOrder = false,
+            shuffleDigitCoding = true,
+            obscureAlphabets = true,
+        )
+
+        Assertions.assertNotNull(all.find { it.result == "test" })
+    }
+
+    @Test
+    fun testOcrOutput() {
+        val input = """
+        32, 24, 11, 55, 33, 51, 55, 42, 41, 24, 54, 32, 53, 54,11,
+        44, 24, 51, 44, 42, 14, 24, 51, 32, 24, 11, 41, 53, 54, 34.
+        13, 11, 23, 51
+        """
+
+        val res = Lamatko.guessDigitDescription(input)
+
+        Assertions.assertNotNull(res)
     }
 }

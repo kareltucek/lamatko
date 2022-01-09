@@ -1,6 +1,7 @@
 package lamatko
 
 import lamatko.CandidateGenerator.gatherSolutions
+import lamatko.Lamatko.impl.simplify
 
 object Lamatko {
     fun solve(
@@ -9,42 +10,52 @@ object Lamatko {
         background: BackgroundProfile = BackgroundProfile.default,
         shuffleDigitOrder: Boolean = false,
         shuffleDigitCoding: Boolean = false,
+        obscureAlphabets: Boolean = false,
+        inheritDigitCoding: Boolean = false,
         resultCount: Int = 100,
         timeoutMillis: Long = 10000,
     ): List<Result> {
         val digits = digitDescription
-            .trim()
             .split(" ")
             .map {
                 Digit(
-                    valueOrder = if (shuffleDigitCoding) Order.Unknown else Order.EitherEndian,
+                    valueOrder =  when(shuffleDigitCoding to inheritDigitCoding) {
+                        true to true -> Order.UnknownInherited
+                        true to false -> Order.Unknown
+                        false to true -> Order.EitherEndianInherited
+                        false to false -> Order.EitherEndian
+                        else -> Order.EitherEndian
+                    },
                     values = it.toList()
                 )
             }
             .reversed()
 
         val code = codedText
-            .trim()
+            .simplify()
             .split(" ")
             .map { it.reversed() }
             .map { it.toList() + List(digits.size - it.length, { ' ' }) }
 
         val problem = Problem(
-            digitOrder = if (shuffleDigitOrder) Order.Unknown else Order.EitherEndian,
+            digitOrder = when(shuffleDigitOrder) {
+                true -> Order.Unknown
+                else -> Order.EitherEndian
+            },
             digits = digits,
-            alphabets = Alphabet.values().toList(),
+            alphabets = Alphabet.values().toList().filter { !it.isObscure || obscureAlphabets },
             code = code,
             offsets = listOf(0, 1),
         )
 
-        val results = problem.gatherSolutions(background)
+        val results = problem.gatherSolutions(background, timeoutMillis)
 
         return results.take(resultCount)
     }
 
     fun guessDigitDescription(codedText: String): String {
         val codeUnits = codedText
-            .trim()
+            .simplify()
             .split(" ")
             .map { it.reversed() }
             .filter { it.isNotBlank() }
@@ -64,5 +75,14 @@ object Lamatko {
             .map { decodeDigit(it, zero).joinToString ("") }
             .reversed()
             .joinToString(" ")
+    }
+
+    object impl {
+        fun String.simplify(): String {
+            return this
+                .trim()
+                .replace("[-,._;:\n]".toRegex(), " ")
+                .replace("  *".toRegex(), " ")
+        }
     }
 }
