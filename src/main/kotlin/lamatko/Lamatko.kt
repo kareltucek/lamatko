@@ -2,7 +2,7 @@ package lamatko
 
 import lamatko.CandidateGenerator.gatherSolutions
 
-object Principal {
+object Lamatko {
     fun solve(
         codedText: String,
         digitDescription: String = guessDigitDescription(codedText),

@@ -73,7 +73,7 @@ class Tests {
 
     @Test
     fun testDigitDescription() {
-        val digitGuess = Principal.guessDigitDescription("10 11 12 13 14 15 16 17 18 19 20 1")
+        val digitGuess = Lamatko.guessDigitDescription("10 11 12 13 14 15 16 17 18 19 20 1")
         Assertions.assertEquals("012 0123456789", digitGuess)
     }
 
@@ -89,7 +89,7 @@ class Tests {
 
     @Test
     fun runPrincipalOnThreeBase() {
-        val all = Principal.solve(
+        val all = Lamatko.solve(
             codedText = "202 012 201 202 202 012 202 120 102 200 1 201 112 012 201 100 20 200 221",
             digitDescription = "012 012 012",
             resultCount = 50,
@@ -108,7 +108,7 @@ class Tests {
      * */
     @Test
     fun runPincipalOnShuffledThreeBase() {
-        val all = Principal.solve(
+        val all = Lamatko.solve(
             codedText = "022 102 02A 022 022 102 022 210 012 020 00A 02A 112 102 02A 010 200 020 22A",
             resultCount = 50,
             shuffleDigitOrder = true,
@@ -124,7 +124,7 @@ class Tests {
 
     @Test
     fun runPrincipalOnSimpleSubstitution() {
-        val res = Principal.solve(
+        val res = Lamatko.solve(
             background = background,
             codedText = "21 17 00 19 19 4 18 4 13 00 18 08 11 13 08 02 08 00 09 03 04 19 04 19 04 03 14 11 04 21 00 15 14 18 8 11 13 08 02 08 03 14",
             digitDescription = "012 0123456789",
