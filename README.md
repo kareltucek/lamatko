@@ -6,12 +6,15 @@ Cipher contest tool that tries to break ciphers based on positional numbering sy
 Assume, you got a cipher based on a positional numeric system, such as a simple substitution a->1, b->2, c->3, etc.. Now, you can do:
 
 ```
-Principal.solve(
+Lamatko.solve(
             codedText = "21 17 00 19 19 4 18 4 13 00 18 08 11 13 08 02 08",
             digitDescription = "012 0123456789",
             shuffleDigitOrder = false,
             shuffleDigitCoding = false,
-        ).first()
+        )
+            .first()
+            .describe()
+            .map(println)
 ```
 
 Lamatko will decode each word as one letter in an arbitrary-positional system, and sort results depending on how much they resemble natural language:
