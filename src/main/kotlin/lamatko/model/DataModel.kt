@@ -27,10 +27,10 @@ data class Digit (
  */
 enum class Alphabet(val chars: List<String>, val isObscure: Boolean = false) {
     Standard(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
-    BigPolishCross( arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
     QLess(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
     WLess(arrayListOf( "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
-    SmallPolishCross( isObscure = true, chars = arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
+    ChAdded( arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" )),
+    WLessChAdded( isObscure = true, chars = arrayListOf("a", "b", "c", "d", "e", "f", "g", "h", "ch", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z" )),
     BrailleCz( isObscure = true, chars = arrayListOf( "a", "?", "b", "?", "k", "i", "l", "?", "c", "j", "f", "i", "m", "s", "p", "?", "e", "?", "h", "?", "o", "?", "r", "?", "d", "0", "g", "e", "n", "t", "q", "?", "a", "?", "?", "?", "u", "?", "?", "v", "c", "o", "n", "?", "x", "?", "?", "?", "s", "?", "t", "z", "?", "w", "?", "d", "r", "ch", "#", "y",)),
     Braille2Cz( isObscure = true, chars = BrailleGenerator.getBraille2() ),
     Braille3Cz( isObscure = true, chars = BrailleGenerator.getBraille3() ),
