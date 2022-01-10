@@ -14,7 +14,7 @@ Lamatko.solve(
         )
             .first()
             .describe()
-            .map(println)
+            .let(println)
 ```
 
 Lamatko will decode each word as one letter in an arbitrary-positional system, and sort results depending on how much they resemble natural language:
