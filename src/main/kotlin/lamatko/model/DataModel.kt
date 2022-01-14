@@ -77,10 +77,25 @@ data class Decoder(
                 .map { it.first }
                 .filter { it != ' ' }
                 .joinToString("")
-            val magnitude = sortedDigits.getOrNull(1)?.second
-                .let { "($it)"}
+            val magnitude = {
+                fun <T, R> Pair<T?, T?>.flatMap(f: (T, T) -> R?): R? {
+                    return this.first?.let { a -> this.second?.let { b -> f(a, b) }}
+                }
+                fun diff (a: Int, b: Int): Int? = (sortedDigits.getOrNull(a)?.second to sortedDigits.getOrNull(b)?.second)
+                        .flatMap { a, b -> b - a }
 
-            digits + magnitude
+                if (diff(0, 1) == diff(1, 2)) {
+                    sortedDigits.getOrNull(1)?.second
+                        ?.let { "($it)" }
+                } else {
+                    val base = diff(0, 1)
+                    val quotient = (diff(0,1) to diff(1, 2)).flatMap { a,b -> b/a }
+
+                    (base to quotient).flatMap { b,q -> "($b*$q)" }
+                }
+            }
+
+            digits + magnitude()
         }.joinToString(" ")
 
         return "$table - $alphabet"
