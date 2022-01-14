@@ -2,6 +2,7 @@ package lamatko
 
 import lamatko.DecoderAlgorithm.decode
 import java.util.*
+import java.util.stream.Collectors.toList
 
 
 object CandidateGenerator {
@@ -38,6 +39,18 @@ object CandidateGenerator {
 
     object impl {
         fun generateCandidates(problem: Problem, f: (Decoder) -> Unit): Unit {
+            val neededDigitCount = problem.code.maxOf { it.size }
+
+            if (neededDigitCount <= problem.digits.size) {
+                generateSimpleCandidates(problem, f)
+            }
+
+            if(problem.digits.size == 1 && problem.digits.first().values.size <= 7) {
+                generateBinaryExpansionCandidates(problem, f)
+            }
+        }
+
+        fun generateSimpleCandidates(problem: Problem, f: (Decoder) -> Unit): Unit {
             problem.digits.indices.toList().forEachPermutation(problem.digitOrder) { digitOrder ->
                 problem.alphabets.forEach { alphabet ->
                     problem.offsets.forEach { offset ->
@@ -55,6 +68,40 @@ object CandidateGenerator {
                     }
                 }
             }
+        }
+
+        fun generateBinaryExpansionCandidates(problem: Problem, f: (Decoder) -> Unit): Unit {
+            val digit = problem.digits.first()
+            val digitCount = problem.code.maxOf { it.size }
+            digit.values.indices.toList().forEachPermutation(problem.digitOrder) { digitOrder ->
+                problem.alphabets.forEach { alphabet ->
+                    problem.offsets.forEach { offset ->
+                            f(
+                                Decoder(
+                                    priority = 0,
+                                    code = problem.code,
+                                    digitTable = createBinaryDigitMap(digit, digitCount, digitOrder),
+                                    alphabet = alphabet,
+                                    startOffset = offset,
+                                )
+                            )
+                    }
+                }
+            }
+        }
+
+        private fun createBinaryDigitMap(digit: Digit, digitCount: Int, digitOrder: List<Int>): List<Map<Char, Int>> {
+            fun pow (a: Int, b: Int): Int = if (b == 0) 1 else a*pow(a, b-1)
+
+            return digitOrder
+                .withIndex()
+                .map {
+                    val permutationIndex = it.value
+                    val listIndex = it.index
+                    digit.values[permutationIndex] to pow(2, listIndex)
+                }
+                .toMap()
+                .let { map -> List(digitCount) { map } }
         }
 
         fun createDigitMap(digits: List<List<Char>>, digitOrder: List<Int>): List<Map<Char, Int>> {

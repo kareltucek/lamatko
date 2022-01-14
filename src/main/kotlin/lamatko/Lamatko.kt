@@ -35,7 +35,7 @@ object Lamatko {
             .simplify()
             .split(" ")
             .map { it.reversed() }
-            .map { it.toList() + List(digits.size - it.length, { ' ' }) }
+            .map { it.toList() + List((digits.size - it.length).coerceAtLeast(0), { ' ' }) }
 
         val problem = Problem(
             digitOrder = when(shuffleDigitOrder) {

@@ -171,6 +171,25 @@ class Tests {
     }
 
     @Test
+    fun runPrincipalOnSerialBraille2() {
+        /** Row encoded braille - bigEndian */
+        val all = Lamatko.solve(
+            background = background,
+            codedText = "1234 1235 1 134 15 1345 1345 24 234 13456 123 1 1236 24 14 13 1",
+            digitDescription = "123456",
+            resultCount = 100000,
+            shuffleDigitOrder = false,
+            shuffleDigitCoding = true,
+            obscureAlphabets = true,
+        )
+
+        all.take(10).map { println(it.describe()) }
+
+        Assertions.assertNotNull(all.find { it.result == "pramennisylavicka" })
+    }
+
+
+    @Test
     fun testOcrOutput() {
         val input = """
         32, 24, 11, 55, 33, 51, 55, 42, 41, 24, 54, 32, 53, 54,11,
