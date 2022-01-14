@@ -8,7 +8,8 @@ import java.util.stream.Collectors.toList
 object CandidateGenerator {
     fun Problem.gatherSolutions(
         profile: BackgroundProfile = BackgroundProfile.default,
-        timeout: Long = 10000
+        timeout: Long = 10000,
+        sortResults: Boolean = true,
     ): List<Result> {
         val dict: MutableMap<String, Result> = mutableMapOf()
 
@@ -24,7 +25,11 @@ object CandidateGenerator {
             }
         }
 
-        return dict.values.sortedByDescending { it.rating }
+        return if(sortResults) {
+            dict.values.sortedByDescending { it.rating }
+        } else {
+            dict.values.toList()
+        }
     }
 
     fun Problem.gatherCandidates(): Set<Decoder> {

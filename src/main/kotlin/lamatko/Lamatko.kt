@@ -12,6 +12,7 @@ object Lamatko {
         shuffleDigitCoding: Boolean = false,
         obscureAlphabets: Boolean = false,
         inheritDigitCoding: Boolean = false,
+        sortResults: Boolean = true,
         resultCount: Int = 100,
         timeoutMillis: Long = 10000,
     ): List<Result> {
@@ -48,7 +49,7 @@ object Lamatko {
             offsets = listOf(0, 1),
         )
 
-        val results = problem.gatherSolutions(background, timeoutMillis)
+        val results = problem.gatherSolutions(background, timeoutMillis, sortResults)
 
         return results.take(resultCount)
     }
