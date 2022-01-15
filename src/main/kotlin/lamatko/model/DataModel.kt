@@ -84,7 +84,7 @@ data class Decoder(
                 fun diff (a: Int, b: Int): Int? = (sortedDigits.getOrNull(a)?.second to sortedDigits.getOrNull(b)?.second)
                         .flatMap { a, b -> b - a }
 
-                if (diff(0, 1) == diff(1, 2)) {
+                if (diff(0, 1) == diff(1, 2) || sortedDigits.size < 3) {
                     sortedDigits.getOrNull(1)?.second
                         ?.let { "($it)" }
                 } else {
