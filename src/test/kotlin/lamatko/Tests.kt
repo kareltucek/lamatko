@@ -172,14 +172,13 @@ class Tests {
 
     @Test
     fun runPrincipalOnSerialBraille2() {
-        /** Row encoded braille - bigEndian */
         val all = Lamatko.solve(
             background = background,
             codedText = "1234 1235 1 134 15 1345 1345 24 234 13456 123 1 1236 24 14 13 1",
             digitDescription = "123456",
             resultCount = 100000,
-            shuffleDigitOrder = false,
-            shuffleDigitCoding = true,
+            shuffleDigitOrder = true,
+            shuffleDigitCoding = false,
             obscureAlphabets = true,
         )
 
@@ -188,6 +187,21 @@ class Tests {
         Assertions.assertNotNull(all.find { it.result == "pramennisylavicka" })
     }
 
+
+    @Test
+    fun runPrincipalOnMobileCode() {
+        val all = Lamatko.solve(
+            background = background,
+            codedText = "49 23 35 23 26 34 26 12",
+            digitDescription = "1234 23456789",
+            resultCount = 100000,
+            shuffleDigitOrder = true,
+            shuffleDigitCoding = false,
+            obscureAlphabets = true,
+        )
+
+        Assertions.assertNotNull(all.find { it.result == "zelenina" })
+    }
 
     @Test
     fun testOcrOutput() {
