@@ -82,7 +82,8 @@ object Lamatko {
         fun String.simplify(): String {
             return this
                 .trim()
-                .replace("[-,._;:\n]".toRegex(), " ")
+                // This causes problems when morse is entered, obviously :-/
+                //.replace("[-,._;:\n]".toRegex(), " ")
                 .replace("  *".toRegex(), " ")
         }
     }

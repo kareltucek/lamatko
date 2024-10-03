@@ -171,6 +171,24 @@ class Tests {
     }
 
     @Test
+    fun runPrincipalOnMorseCode() {
+        val all = Lamatko.solve(
+            background = background,
+            codedText = "-.-. .. -- -... .- .-.. --- ...- .- -- ..- --.. .. -.- .- ... ...- --- -... --- -.. .-",
+            digitDescription = "0.- 0.- 0.- 0.-",
+            resultCount = 100000,
+            shuffleDigitOrder = true,
+            shuffleDigitCoding = false,
+            obscureAlphabets = true,
+        )
+
+        all.forEach { print(it.result) }
+
+        Assertions.assertNotNull(all.find { it.result == "cimbalovamuzikasvoboda" })
+    }
+
+
+    @Test
     fun runPrincipalOnSerialBraille2() {
         val all = Lamatko.solve(
             background = background,
